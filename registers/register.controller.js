@@ -7,14 +7,14 @@ const router = express.Router();
 module.exports = router;
 
 router.post('/save-user', saveUserSchema, saveUser);
-router.post('/LineCallback', saveToken);
+router.get('/linecallback', saveToken);
 
 function saveToken(req, res, next) {
     const userEmail = req.query.state;
     const token = req.query.code;
-    console.log(req.body);
     registerService.saveToken({userEmail, token})
-        .then(() => res.json({ message: 'การลงทะเบียนเสร็จสิ้น' }))
+        .then(() => res.json({ message: 'การลงทะเบียนเสร็จสิ้น' };
+        ))
         .catch(next);
 }
 

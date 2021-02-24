@@ -13,9 +13,10 @@ app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: 
 app.use('/registers', require('./registers/register.controller'));
 app.use(errorHandler);
 
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
-app.listen(port, () => {
-    console.log('Server listening on port ' + port);
+const hostname = '0.0.0.0';
+const port = 3000;
+app.listen(port, hostname, () => {
+    console.log('Server listening on port http://' + hostname + ":" + port);
 });
 
 /*const lineNotify = require('line-notify-nodejs')('b2g3MAme8sGL0GLmumq0k7oka25A8GuLCrf8ONpcheK');
