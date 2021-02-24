@@ -1,0 +1,3 @@
+{
+    "connectionString": "mongodb+srv://rightdoc:r1ghtd0c@cluster0.rhuqb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+}
