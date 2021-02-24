@@ -6,10 +6,9 @@ module.exports = {
 };
 
 async function saveUser(params, origin){
-	console.log(params.fullName);
     const user = new db.User(params);
     const oldUser = await db.User.findOne({ email: params.email });
-    const oldToken = await db.LineToken.findOne({ email: params.email });
+    const oldToken = await db.LineToken.findOne({ user: oldUser });
     if(oldUser){
     	await oldUser.remove();
     }
@@ -24,7 +23,9 @@ async function saveToken(params) {
 	const userData = await db.User.findOne({ email: params.userEmail });
 	const form = new db.LineToken({
 		user: userData.id,
-		token: params.token
+		code: params.token,
+		verified: false,
+		access_token: null
 	});
 	await form.save();
 }
