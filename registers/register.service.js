@@ -23,6 +23,7 @@ async function saveToken(params) {
 	const userData = await db.User.findOne({ email: params.userEmail });
 	const form = new db.LineToken({
 		user: userData.id,
+		email: params.userEmail,
 		code: params.token,
 		verified: false,
 		access_token: null

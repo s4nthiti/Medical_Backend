@@ -14,6 +14,7 @@ app.use('/registers', require('./registers/register.controller'));
 app.use('/medicines', require('./medicines/medicine.controller'));
 app.use('/patients', require('./patients/patient.controller'));
 app.use('/records', require('./records/record.controller'));
+app.use('/notifys', require('./notifys/notify.controller'));
 app.use(errorHandler);
 
 const hostname = '0.0.0.0';

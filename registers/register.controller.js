@@ -7,7 +7,7 @@ const qs = require('qs');
 const config = require('../config.json');
 const axios = require('axios').default;
 const db = require("../_helpers/db");
-const notifyService = require('../notify/notify.service');
+const notifyService = require('../notifys/notify.service');
 
 module.exports = router;
 
@@ -37,7 +37,7 @@ function requestToken(tokenCode) {
 	const jsonData = {
 		grant_type: 'authorization_code',
 		code: tokenCode,
-		redirect_uri: 'http://34.126.120.13:3000/registers/linecallback',
+		redirect_uri: 'http://34.126.120.13/callback',
 		client_id: config.client_id,
 		client_secret: config.client_secret
 	}
@@ -62,6 +62,7 @@ function requestToken(tokenCode) {
 			}
 			else{
 				lineRes.sendStatus(400)
+
 			}
 		})
 		.catch((err) => {
