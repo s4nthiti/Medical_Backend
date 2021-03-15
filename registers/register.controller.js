@@ -70,7 +70,6 @@ function requestToken(tokenCode) {
 	
 }
 
-
 function saveUserSchema(req, res, next) {
     const schema = Joi.object({
         email: Joi.string().email().required(),

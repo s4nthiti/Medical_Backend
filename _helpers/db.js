@@ -7,6 +7,9 @@ mongoose.Promise = global.Promise;
 module.exports = {
     User: require('registers/user.model'),
     LineToken: require('registers/line-token.model'),
+    Medicine: require('medicines/medicine.model'),
+    Patient: require('patients/patient.model'),
+    Record: require('records/record.model'),
     isValidId
 };
 

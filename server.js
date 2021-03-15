@@ -11,6 +11,9 @@ app.use(bodyParser.json());
 app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
 
 app.use('/registers', require('./registers/register.controller'));
+app.use('/medicines', require('./medicines/medicine.controller'));
+app.use('/patients', require('./patients/patient.controller'));
+app.use('/records', require('./records/record.controller'));
 app.use(errorHandler);
 
 const hostname = '0.0.0.0';
