@@ -3,13 +3,14 @@ const router = express.Router();
 const Joi = require('joi');
 const medicineService = require('./medicine.service');
 const validateRequest = require('../_middleware/validate-request');
+const authorize = require('_middleware/authorize');
 
 module.exports = router;
 
-router.post('/add', addMedicine);
-router.post('/delete', deleteMedicine);
-router.get('/getAll', getAll);
-router.post('/get', getByName);
+router.post('/add', authorize(),addMedicine);
+router.post('/delete', authorize(),deleteMedicine);
+router.get('/getAll', authorize(),getAll);
+router.post('/get', authorize(),getByName);
 
 function addMedicine(req, res, next){
     medicineService.addMedicine(req.body)

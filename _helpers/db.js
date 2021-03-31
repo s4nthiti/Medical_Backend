@@ -5,8 +5,8 @@ mongoose.connect(process.env.MONGODB_URI || config.connectionString, connectionO
 mongoose.Promise = global.Promise;
 
 module.exports = {
-    User: require('registers/user.model'),
-    LineToken: require('registers/line-token.model'),
+    User: require('accounts/user.model'),
+    LineToken: require('accounts/line-token.model'),
     Medicine: require('medicines/medicine.model'),
     Patient: require('patients/patient.model'),
     Record: require('records/record.model'),

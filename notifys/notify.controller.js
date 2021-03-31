@@ -6,10 +6,10 @@ const validateRequest = require('../_middleware/validate-request');
 
 module.exports = router;
 
-router.post('/sendNotify', testNotify);
+router.get('/sendNotify/:_id&:nurseName', sendNotify);
 
-function testNotify(req, res, next) {
-    notifyService.testNotify(req.body).then(result => {
+function sendNotify(req, res, next) {
+    notifyService.sendNotify(req.params).then(result => {
             if(result === 'error')
                 res.json('none');
             else

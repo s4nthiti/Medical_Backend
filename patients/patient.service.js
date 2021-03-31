@@ -68,7 +68,7 @@ async function getPatient(pname){
 
 async function getAllPatient(){
     const patients = await db.Patient.find();
-    return patients.map(x => basicDetails(x));
+    return patients;
 }
 
 async function getById(params){

@@ -3,15 +3,17 @@ const router = express.Router();
 const Joi = require('joi');
 const patientService = require('./patient.service');
 const validateRequest = require('../_middleware/validate-request');
+const authorize = require('_middleware/authorize');
 
 module.exports = router;
 
-router.post('/add', addPatientSchema, addPatient);
-router.get('/:name', getPatient);
-router.get('/', getAllPatient);
-router.get('/bed/:bedNo', getByBed);
-router.get('/remove/:bedNo', removePatientfromBed);
-router.get('/addBed/:patientName&:bedNo', addPatientBed);
+router.post('/add', authorize(), addPatientSchema, addPatient);
+router.get('/delete/:name', authorize(), deletePatient);
+router.get('/:name',authorize(), getPatient);
+router.get('/',authorize(), getAllPatient);
+router.get('/bed/:bedNo',authorize(), getByBed);
+router.get('/remove/:bedNo',authorize(), removePatientfromBed);
+router.get('/addBed/:patientName&:bedNo',authorize(), addPatientBed);
 
 function addPatientSchema(req, res, next) {
     const schema = Joi.object({
@@ -34,6 +36,17 @@ function addPatient(req, res, next) {
         .catch(next);
 }
 
+function deletePatient(req, res, next) {
+    patientService.deletePatient(req.params.name, req.get('origin'))
+        .then(result => {
+            if(result === 'error')
+                res.json('none');
+            else
+                res.json(result);
+        })
+        .catch(next);
+}
+
 function removePatientfromBed(req, res, next) {
     patientService.removePatientfromBed(req.params.bedNo, req.get('origin'))
         .then(result => {
@@ -46,7 +59,6 @@ function removePatientfromBed(req, res, next) {
 }
 
 function addPatientBed(req, res, next) {
-    console.log(req.params);
     patientService.addPatientBed(req.params, req.get('origin'))
         .then(result => {
             if(result === 'error')

@@ -3,12 +3,13 @@ const router = express.Router();
 const Joi = require('joi');
 const recordService = require('./record.service');
 const validateRequest = require('../_middleware/validate-request');
+const authorize = require('_middleware/authorize');
 
 module.exports = router;
 
-router.post('/add', addRecordSchema, addRecord);
-router.get('/:bedNo', getRecord);
-router.get('/delete/:_id', deleteRecord);
+router.post('/add', authorize(), addRecordSchema, addRecord);
+router.get('/:bedNo', authorize(), getRecord);
+router.get('/delete/:_id', authorize(), deleteRecord);
 
 function getRecord(req, res, next) {
     recordService.getRecord(req.params.bedNo)
@@ -27,32 +28,27 @@ function addRecordSchema(req, res, next) {
         medicationName: Joi.string().required(),
         startdate: Joi.date().required(),
         enddate: Joi.date().required(),
-        time: Joi.number().required()
+        time: Joi.number().required(),
+        nurseName: Joi.string().required()
     });
     validateRequest(req, next, schema);
 }
 
 function addRecord(req, res, next) {
-    console.log(req.body.bedNo);
-    console.log(req.body.medicationName);
-    console.log(req.body.startdate);
-    console.log(req.body.enddate);
-    console.log(req.body.time);
     recordService.addRecord(req.body, req.get('origin'))
         .then(result => {
             if(result === 'error')
                 res.json('none');
             else
+            {
+                notifySetup(req.body);
                 res.json(result);
+            }
         }).catch(next);
-    /*patientService.addPatient(req.body, req.get('origin'))
-        .then(result => {
-            if(result === 'error')
-                res.json('none');
-            else
-                res.json(result);
-        })
-        .catch(next);*/
+}
+
+function notifySetup(params) {
+    recordService.timerNotify(params);
 }
 
 function deleteRecord(req, res, next){
