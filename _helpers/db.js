@@ -10,6 +10,7 @@ module.exports = {
     Medicine: require('medicines/medicine.model'),
     Patient: require('patients/patient.model'),
     Record: require('records/record.model'),
+    Checkin: require('records/checkin.model'),
     isValidId
 };
 

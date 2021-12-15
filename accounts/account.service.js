@@ -52,7 +52,7 @@ async function register(params, origin) {
     // create account object
     const user = new db.User(params);
     user.lineNotify = false;
-	user.role = 'User';
+	user.role = 'Admin';
 
     // hash password
     user.passwordHash = hash(params.password);

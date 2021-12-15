@@ -36,7 +36,7 @@ cron.schedule('* * * * *', function(){
 });
 
 const hostname = '0.0.0.0';
-const port = 25565;
+const port = 4000;
 app.listen(port, hostname, () => {
     console.log('Server listening on port http://' + hostname + ":" + port);
 });

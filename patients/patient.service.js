@@ -1,4 +1,5 @@
 const db = require("../_helpers/db");
+const recordService = require('../records/record.service');
 
 module.exports = {
     addPatient,
@@ -6,6 +7,7 @@ module.exports = {
     updatePatient,
     getPatient,
     getAllPatient,
+    getAllPatientNoRoom,
     getById,
     getByBed,
     removePatientfromBed,
@@ -22,8 +24,8 @@ async function addPatient(params, origin){
     return 'success';
 }
 
-async function deletePatient(params){
-    const patient = await db.Patient.findOne({name: params.name});
+async function deletePatient(userid){
+    const patient = await db.Patient.findById(userid);
     await patient.remove();
     return 'success';
 }
@@ -34,6 +36,7 @@ async function removePatientfromBed(params){
         const patient = await db.Patient.findOne({bedNo: params});
         if(!patient)
             return 'error';
+        recordService.deleteByBed(patient.bedNo);
         patient.bedNo = 0;
         await patient.save();
         return 'success';
@@ -68,6 +71,11 @@ async function getPatient(pname){
 
 async function getAllPatient(){
     const patients = await db.Patient.find();
+    return patients;
+}
+
+async function getAllPatientNoRoom(){
+    const patients = await db.Patient.find({bedNo: '0'});
     return patients;
 }
 

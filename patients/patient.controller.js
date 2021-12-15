@@ -8,9 +8,10 @@ const authorize = require('_middleware/authorize');
 module.exports = router;
 
 router.post('/add', authorize(), addPatientSchema, addPatient);
-router.get('/delete/:name', authorize(), deletePatient);
+router.get('/delete/:id', authorize(), deletePatient);
 router.get('/:name',authorize(), getPatient);
 router.get('/',authorize(), getAllPatient);
+router.get('/empty/room',authorize(), getAllPatientNoRoom);
 router.get('/bed/:bedNo',authorize(), getByBed);
 router.get('/remove/:bedNo',authorize(), removePatientfromBed);
 router.get('/addBed/:patientName&:bedNo',authorize(), addPatientBed);
@@ -37,7 +38,7 @@ function addPatient(req, res, next) {
 }
 
 function deletePatient(req, res, next) {
-    patientService.deletePatient(req.params.name, req.get('origin'))
+    patientService.deletePatient(req.params.id, req.get('origin'))
         .then(result => {
             if(result === 'error')
                 res.json('none');
@@ -88,6 +89,12 @@ function getByBed(req, res, next) {
 
 function getAllPatient(req, res, next) {
     patientService.getAllPatient()
+        .then(patients => patients ? res.json(patients) : res.sendStatus(404))
+        .catch(next);
+}
+
+function getAllPatientNoRoom(req, res, next) {
+    patientService.getAllPatientNoRoom()
         .then(patients => patients ? res.json(patients) : res.sendStatus(404))
         .catch(next);
 }
