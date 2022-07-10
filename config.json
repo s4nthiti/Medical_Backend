@@ -1,8 +1,0 @@
-{
-    "connectionString": "mongodb+srv://rightdoc:r1ghtd0c@cluster0.rhuqb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "redirect_uri": "http://35.198.244.103/callback",
-    "client_id": "4NrH6eNXkKpHdjxi5bxODy",
-    "client_secret": "bsoNeBaYIQzYc8HPoRHlQArX4Ai1kmDUKrND1lwWNSV",
-    "secret": "awdwadaw-a391-43f8-baa5-asfawdawdasc12",
-    "tokenLife": 86400
-}
